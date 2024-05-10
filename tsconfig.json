@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/(event_organiser)/dashboard"
-  ],
+, "todo.ms"  ],
   "exclude": ["node_modules"]
 }

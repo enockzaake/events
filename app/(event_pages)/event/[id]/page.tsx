@@ -1,19 +1,15 @@
-import React from "react";
+import { paramProps } from "@/types";
+import { getEventDetails } from "@/actions/userActions";
 
-interface paramProps {
-  params?: {
-    id?: string;
-  };
-  searchParams?: {
-    query?: string;
-  };
-}
-// 1. All events
-// 2. Filters -> params & searchParams
-// 3. Categories
+const EventPage = async ({ params, searchParams }: paramProps) => {
+  const event = await getEventDetails(params?.id as string);
 
-const EventPage = ({ params, searchParams }: paramProps) => {
-  return <div>EventPage: {JSON.stringify(params)}</div>;
+  return (
+    <div>
+      Event details:{JSON.stringify(event, null, 2)}
+      <br></br>
+    </div>
+  );
 };
 
 export default EventPage;
