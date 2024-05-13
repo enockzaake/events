@@ -17,7 +17,8 @@ export async function getEventDetails(id: string) {
   const { data: event, error } = await supabase
     .from("events")
     .select(`*,tickets(*)`)
-    .eq("id", id);
+    .eq("id", id)
+    .single();
 
-  return event;
+  return JSON.parse(JSON.stringify(event));
 }

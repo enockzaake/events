@@ -22,3 +22,17 @@ export interface EventType {
   visibility: "PUBLIC" | "PRIVATE";
   status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
 }
+
+export interface TicketType {
+  id: string;
+  event_id: string;
+  name: string;
+  price: number;
+  type: "PAID" | "FREE" | "DONATION";
+  quantity: number;
+  description: string;
+  status: "ON_SALE" | "SOLD_OUT";
+  start_sale: string;
+  end_sale: string;
+  created_at: string;
+}
