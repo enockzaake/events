@@ -1,9 +1,13 @@
 "use client";
+import React, { useContext } from "react";
+
 import { TicketType } from "@/types";
-import { useState } from "react";
+import { TicketContext } from "@/lib/context/ticketProvider";
 
 const TicketCard = ({ ticket }: { ticket: TicketType }) => {
-  const [ticketQty, setTicketQty] = useState<number>(0);
+  const { getTicketCount, increaseTicketCount, decreaseTicketCount } =
+    useContext(TicketContext)!;
+
   return (
     <div className="bg-green-100 px-4">
       <span>{ticket.name}</span>
@@ -17,15 +21,15 @@ const TicketCard = ({ ticket }: { ticket: TicketType }) => {
       <div className="flex gap-2 items-center">
         <button
           className="text-4xl text-bold w-12 h-12 bg-green-400 rounded-xl"
-          disabled={ticketQty === 0}
-          onClick={() => setTicketQty(ticketQty - 1)}
+          disabled={getTicketCount(ticket.id) === 0}
+          onClick={() => decreaseTicketCount(ticket.id)}
         >
           -
         </button>
-        <span className="text-4xl"> {ticketQty}</span>
+        <span className="text-4xl"> {getTicketCount(ticket.id)}</span>
         <button
           className="text-4xl text-bold w-12 h-12 bg-green-400 rounded-xl"
-          onClick={() => setTicketQty(ticketQty + 1)}
+          onClick={() => increaseTicketCount(ticket.id)}
         >
           +
         </button>

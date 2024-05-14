@@ -1,9 +1,10 @@
-import { TicketType, paramProps } from "@/types";
+import { paramProps } from "@/types";
 import { getEventDetails } from "@/actions/userActions";
+import { TicketProvider } from "@/lib/context/ticketProvider";
 
-import TicketCard from "@/components/ticketCard";
+import TicketsContainer from "@/components/ticketsContainer";
 
-const EventPage = async ({ params, searchParams }: paramProps) => {
+const EventPage = async ({ params }: paramProps) => {
   const event = await getEventDetails(params?.id as string);
 
   return (
@@ -11,9 +12,9 @@ const EventPage = async ({ params, searchParams }: paramProps) => {
       Event details:{JSON.stringify(event, null, 2)}
       <br></br>
       <div className="mt-12">
-        {event.tickets.map((ticket: TicketType, index: number) => (
-          <TicketCard key={index} ticket={ticket} />
-        ))}
+        <TicketProvider>
+          <TicketsContainer eventId={event.id} tickets={event.tickets} />
+        </TicketProvider>
       </div>
     </div>
   );

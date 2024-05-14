@@ -128,7 +128,7 @@ export default function Home() {
               <h1 className="text-4xl font-bold sm:text-6xl">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-white">
                   {" "}
-                  Simplified credit cards for students{" "}
+                  Find all the latest events
                 </span>
               </h1>
               <p className="mt-5 text-base text-white sm:text-xl">

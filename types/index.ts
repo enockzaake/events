@@ -36,3 +36,13 @@ export interface TicketType {
   end_sale: string;
   created_at: string;
 }
+
+export interface OrderTicket {
+  ticket_id: string;
+  quantity: number;
+}
+
+export interface OrderType {
+  eventId: string;
+  orderTickets: OrderTicket[];
+}

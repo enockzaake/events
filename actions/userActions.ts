@@ -1,5 +1,6 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
+import { OrderTicket, OrderType } from "@/types";
 
 export async function Login(form: FormData) {
   console.log("EMAIL:", form.get("email"));
@@ -12,6 +13,7 @@ export async function getEvents() {
   const { data: events, error } = await supabase.from("events").select("*");
   return events;
 }
+
 export async function getEventDetails(id: string) {
   const supabase = createClient();
   const { data: event, error } = await supabase
@@ -21,4 +23,38 @@ export async function getEventDetails(id: string) {
     .single();
 
   return JSON.parse(JSON.stringify(event));
+}
+
+export async function createOrder(order: OrderType) {
+  // Account for Authenticated user or Anonymous use
+
+  const supabase = createClient();
+  const user = await supabase.auth.getUser();
+  const userID = user.data.user?.id; // 7501e42f-1841-42cb-ba0f-9bf172d74625
+  const { data, error } = await supabase
+    .from("orders")
+    .insert([
+      {
+        profile_id: "7501e42f-1841-42cb-ba0f-9bf172d74625",
+        status: "PENDING",
+        event_id: order.eventId,
+      },
+    ])
+    .select()
+    .single();
+
+  const finalOrderTickets = order.orderTickets.map((ticket) => {
+    return { ...ticket, order_id: data.id };
+  });
+
+  // TRY CHECKING HOW TO DO TRANSACTIONS IN CASE ONE EXECUTION FAILS REVERSE THEN ROLLBACK
+  if (data) {
+    const { data, error } = await supabase
+      .from("order_ticket")
+      .insert(finalOrderTickets)
+      .select();
+
+    console.log("ORDER TICKETS RESULT:", data);
+    console.log("ORDER TICKETS ERROR:", error);
+  }
 }
