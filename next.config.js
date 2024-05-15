@@ -9,6 +9,11 @@ module.exports = {
         hostname: "cdn.rareblocks.xyz",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "source.unsplash.com",
+        port: "",
+      },
     ],
   },
 };

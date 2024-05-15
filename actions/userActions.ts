@@ -1,6 +1,6 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
-import { OrderTicket, OrderType } from "@/types";
+import { OrderType } from "@/types";
 
 export async function Login(form: FormData) {
   console.log("EMAIL:", form.get("email"));
@@ -58,3 +58,15 @@ export async function createOrder(order: OrderType) {
     console.log("ORDER TICKETS ERROR:", error);
   }
 }
+
+export async function getUserOrders() {
+  const supabase = createClient();
+  const user = await supabase.auth.getUser();
+  const userID = user.data.user?.id || "7501e42f-1841-42cb-ba0f-9bf172d74625";
+  const { data, error } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("profile_id", userID);
+}
+
+export async function updateAcccountDetails() {}
