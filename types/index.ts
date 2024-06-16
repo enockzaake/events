@@ -1,6 +1,6 @@
 export interface paramProps {
-  params?: {
-    id?: string;
+  params: {
+    id: string;
   };
   searchParams?: {
     query?: string;

@@ -2,6 +2,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { OrderType } from "@/types";
 
+import { RequestPayment } from "@/lib/payments/mpesa.mjs";
+
 export async function Login(form: FormData) {
   console.log("EMAIL:", form.get("email"));
   console.log("PASSWORD:", form.get("password"));
@@ -70,3 +72,8 @@ export async function getUserOrders() {
 }
 
 export async function updateAcccountDetails() {}
+
+export async function makePayment(phoneNumber: string, order_id: string) {
+  const res = await RequestPayment(phoneNumber, order_id);
+  console.log("PAYMENT RESPONSE:", res);
+}

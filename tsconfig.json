@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/(event_organiser)/dashboard"
-, "todo.ms"  ],
+, "todo.ms", "lib/payments/mpesa.mjs"  ],
   "exclude": ["node_modules"]
 }
