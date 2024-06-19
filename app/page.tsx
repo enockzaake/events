@@ -1,6 +1,6 @@
-import Navbar from "@/components/navbar";
 import Search from "@/components/search";
-import Link from "next/link";
+import Image from "next/image";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -17,7 +17,7 @@ export default function Home() {
             <div className="flex items-center justify-between h-16 lg:h-20">
               <div className="flex-shrink-0">
                 <a href="#" title="" className="flex">
-                  <img
+                  <Image
                     className="w-auto h-8"
                     src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/5/logo.svg"
                     alt=""
@@ -136,7 +136,9 @@ export default function Home() {
                 credit card, make your life simple.
               </p>
 
-              <Search />
+              <Suspense fallback={"Loading..."}>
+                <Search />
+              </Suspense>
 
               {/* 3 BOTTOM TAGS  */}
               <div className="grid grid-cols-1 px-20 mt-12 text-left gap-x-12 gap-y-8 sm:grid-cols-3 ">
