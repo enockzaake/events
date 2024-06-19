@@ -7,6 +7,11 @@ export interface paramProps {
   };
 }
 
+export interface FetchReturnType {
+  data: Record<string, any> | null;
+  error: { message: string; status: number } | null;
+}
+
 export interface EventType {
   id: string;
   organisation_id: string;
@@ -45,4 +50,25 @@ export interface OrderTicket {
 export interface OrderType {
   eventId: string;
   orderTickets: OrderTicket[];
+}
+
+export interface PaymentRequest {
+  BusinessShortCode: string;
+  Password: string;
+  Timestamp: string;
+  TransactionType: "CustomerPayBillOnline";
+  Amount: string;
+  PartyA: string;
+  PartyB: string;
+  PhoneNumber: string;
+  CallBackURL: string;
+  AccountReference: string;
+  TransactionDesc: string;
+}
+export interface TransactionResponse {
+  MerchantRequestID: string;
+  CheckoutRequestID: string;
+  ResponseCode: string;
+  ResponseDescription: string;
+  CustomerMessage: string;
 }

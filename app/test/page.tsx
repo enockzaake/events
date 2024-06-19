@@ -19,7 +19,8 @@ export default function LoginForm() {
     e.preventDefault();
     const form = new FormData(e.target as HTMLFormElement);
     const phoneNumber = form.get("phone") as string;
-    await makePayment(phoneNumber, "123456");
+    const order_id = form.get("order_id") as string;
+    await makePayment(phoneNumber, order_id);
   }
   return (
     <div className="flex items-center justify-center bg-black min-h-screen">
@@ -37,7 +38,16 @@ export default function LoginForm() {
             <Input
               id="phone"
               type="phone"
+              name="phone"
               placeholder="+254947432345"
+              required
+            />
+            <Label htmlFor="order_id">Order ID</Label>
+            <Input
+              id="order_id"
+              type="order_id"
+              name="order_id"
+              placeholder="123456"
               required
             />
           </CardContent>

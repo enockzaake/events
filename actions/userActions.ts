@@ -2,7 +2,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { OrderType } from "@/types";
 
-import { RequestPayment } from "@/lib/payments/mpesa.mjs";
+import { RequestPayment } from "@/lib/payments/mpesa";
 
 export async function Login(form: FormData) {
   console.log("EMAIL:", form.get("email"));
