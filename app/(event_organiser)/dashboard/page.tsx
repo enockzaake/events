@@ -42,60 +42,12 @@ import {
 } from "@/components/ui/table";
 const Dashboard = () => {
   return (
-    // <div className="bg-blue-300 min-h-screen h-[3000px] ">
-    //   Dashboard
-    //   <br></br>
-    //   <p className="my-12 mx-2">
-    //     <Link
-    //       href="/dashboard/create"
-    //       className="bg-green-300 p-4 my-4 rounded"
-    //     >
-    //       New event
-    //     </Link>
-    //   </p>
-    //   <br></br>
-    //   1.Summary of tickets and events 2.Upcoming events 3.Latest orders
-    // </div>
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          <Link
-            href="#"
-            className="flex items-center gap-2 text-lg font-semibold md:text-base"
-          >
-            <Package2 className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
-          </Link>
-          <Link
-            href="#"
-            className="text-foreground transition-colors hover:text-foreground"
-          >
+          <span className="text-foreground transition-colors hover:text-foreground text-2xl ml-2">
             Dashboard
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Orders
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Products
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Customers
-          </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Analytics
-          </Link>
+          </span>
         </nav>
         <Sheet>
           <SheetTrigger asChild>

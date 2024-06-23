@@ -21,6 +21,8 @@ export default function Home() {
                     className="w-auto h-8"
                     src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/5/logo.svg"
                     alt=""
+                    width={200}
+                    height={200}
                   />
                 </a>
               </div>

@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   const orderId = searchParams.get("order_id");
 
   console.log("ORDER ID:", orderId);
-  console.log("MPESA CALLBACK:", await request.json());
+  console.log("MPESA CALLBACK:", JSON.stringify(await request.json(), null, 2));
 
   return NextResponse.json({ status: "passed" });
 
