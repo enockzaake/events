@@ -193,7 +193,7 @@ export default function Dashboard() {
                     </TableHeader>
                     <TableBody>
                       {[1, 2, 3, 4].map((event: any, i: number) => (
-                        <TableRow>
+                        <TableRow key={i}>
                           <TableCell className="hidden sm:table-cell">
                             <Image
                               alt="Product image"
