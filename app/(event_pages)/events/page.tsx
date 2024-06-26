@@ -1,4 +1,4 @@
-import { EventType, paramProps } from "@/types";
+import { EventType } from "@/types";
 import { getEvents } from "@/actions/userActions";
 
 import EventCard from "@/components/eventCard";

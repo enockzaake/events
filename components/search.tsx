@@ -1,5 +1,6 @@
 "use client";
-import { redirect, usePathname, useSearchParams } from "next/navigation";
+import { SearchIcon } from "lucide-react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 const Search = () => {
@@ -26,12 +27,18 @@ const Search = () => {
   }
   return (
     <form onSubmit={handleSearch}>
-      <input
-        name="search"
-        className="flex w-[900px] mx-auto items-center px-6 py-4 mt-8 font-semibold text-black border border-black transition-all duration-100 rounded-lg sm:mt-16"
-        defaultValue={searchParams.get("query")?.toString()}
-      />
-      <button className="bg-green-500 p-2 rounded ml-12 mt-4">SUBMIT</button>
+      <div className="flex justify-center mt-12 ">
+        <input
+          name="search"
+          className="min-w-[800px] items-center justify-center px-3 py-3  text-black rounded-s-lg text-xl border-none"
+          defaultValue={searchParams.get("query")?.toString()}
+        />
+
+        <button className="bg-indigo-500 py-3 px-4 rounded-e-lg">
+          {" "}
+          <SearchIcon  />
+        </button>
+      </div>
     </form>
   );
 };

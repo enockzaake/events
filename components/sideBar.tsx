@@ -1,31 +1,28 @@
-import Image from "next/image";
+"use client";
 import Link from "next/link";
 import React from "react";
 
-const SideBar = () => {
-  return (
-    <div className="h-screen fixed p-3 space-y-2 w-60 bg-gray-900 text-white">
-      {/* LOGO */}
-      <div className="flex items-center justify-center p-2 py-6  bg-red-900">
-        <Image
-          src="https://source.unsplash.com/100x100/?portrait"
-          alt=""
-          width={60}
-          height={60}
-          className="rounded-full dark:bg-gray-500"
-        />
+import { usePathname } from "next/navigation";
 
-        <h2 className="text-3xl font-semibold">EVENTLY</h2>
-      </div>
+const SideBar = () => {
+  const path = usePathname();
+  console.log("SIDEBAR PATHNAME:", path);
+  return (
+    <div className="flex flex-col h-screen fixed p-3 w-56 space-y-6 bg-indigo-900 text-white">
+      {/* LOGO */}
+      <h2 className="p-2 text-4xl font-semibold">EVENTLY</h2>
 
       {/* LINKS */}
-      <div className="divide-y dark:divide-gray-300">
+      <div className="flex flex-col justify-between h-full">
         <ul className="pt-2 pb-4 space-y-1 ">
           <li className="dark:bg-gray-100 dark:text-gray-900">
             <Link
               rel="noopener noreferrer"
               href="/dashboard"
-              className="flex items-center p-2 space-x-3 rounded-md"
+              className={`flex items-center p-2 space-x-3 rounded-md ${
+                path.endsWith("/dashboard") ? "bg-[#e2ece9] text-black" : ""
+              } `}
+              // bg-[#e2ece9] text-black
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +38,9 @@ const SideBar = () => {
             <Link
               rel="noopener noreferrer"
               href="/dashboard/events"
-              className="flex items-center p-2 space-x-3 rounded-md"
+              className={`flex items-center p-2 space-x-3 rounded-md ${
+                path.endsWith("/events") ? "bg-[#e2ece9] text-black" : ""
+              } `}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +56,9 @@ const SideBar = () => {
             <Link
               rel="noopener noreferrer"
               href="/dashboard/orders"
-              className="flex items-center p-2 space-x-3 rounded-md"
+              className={`flex items-center p-2 space-x-3 rounded-md ${
+                path.endsWith("/orders") ? "bg-[#e2ece9] text-black" : ""
+              } `}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,8 +74,10 @@ const SideBar = () => {
           <li>
             <Link
               rel="noopener noreferrer"
-              href="/organisation"
-              className="flex items-center p-2 space-x-3 rounded-md"
+              href="/dashboard/organisation"
+              className={`flex items-center p-2 space-x-3 rounded-md ${
+                path.endsWith("/organisation") ? "bg-[#e2ece9] text-black" : ""
+              } `}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -91,8 +94,10 @@ const SideBar = () => {
           <li>
             <a
               rel="noopener noreferrer"
-              href="/reviews"
-              className="flex items-center p-2 space-x-3 rounded-md"
+              href="/dashboard/reviews"
+              className={`flex items-center p-2 space-x-3 rounded-md ${
+                path.endsWith("/reviews") ? "bg-[#e2ece9] text-black" : ""
+              } `}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +115,7 @@ const SideBar = () => {
             <Link
               rel="noopener noreferrer"
               href="/account"
-              className="flex items-center p-2 space-x-3 rounded-md"
+              className={`flex items-center p-2 space-x-3 rounded-md`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -128,7 +133,7 @@ const SideBar = () => {
             <a
               rel="noopener noreferrer"
               href="#"
-              className="flex items-center p-2 space-x-3 rounded-md"
+              className={`flex items-center p-2 space-x-3 rounded-md `}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

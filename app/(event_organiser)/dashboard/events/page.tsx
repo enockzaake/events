@@ -1,10 +1,13 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  CircleUser,
   File,
   Home,
   LineChart,
   ListFilter,
+  Menu,
   MoreHorizontal,
   Package,
   Package2,
@@ -18,14 +21,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -46,76 +42,116 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function Dashboard() {
+import { organiserEvents } from "@/actions/organiserEvents";
+
+function SkeletonCard() {
+  return (
+    <div className="flex mt-2">
+      <Skeleton className="h-[70px] w-[100px] rounded-xl" />
+      <Skeleton className="h-[70px] w-[100px] rounded-xl" />
+      <Skeleton className="h-[70px] w-[100px] rounded-xl" />
+      <Skeleton className="h-[70px] w-[100px] rounded-xl" />
+      <Skeleton className="h-[70px] w-[100px] rounded-xl" />
+      <Skeleton className="h-[70px] w-[100px] rounded-xl" />
+    </div>
+  );
+}
+
+export default async function Dashboard() {
+  const { events, error } = await organiserEvents();
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+      <div className="flex flex-col sm:gap-4 sm:py-4 ">
+        <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+          <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+            <span className="text-foreground transition-colors hover:text-foreground text-2xl ml-2">
+              Events
+            </span>
+          </nav>
           <Sheet>
             <SheetTrigger asChild>
-              <Button size="icon" variant="outline" className="sm:hidden">
-                <PanelLeft className="h-5 w-5" />
-                <span className="sr-only">Toggle Menu</span>
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0 md:hidden"
+              >
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="sm:max-w-xs">
+            <SheetContent side="left">
               <nav className="grid gap-6 text-lg font-medium">
                 <Link
                   href="#"
-                  className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+                  className="flex items-center gap-2 text-lg font-semibold"
                 >
-                  <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
+                  <Package2 className="h-6 w-6" />
                   <span className="sr-only">Acme Inc</span>
                 </Link>
-                <Link
-                  href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                >
-                  <Home className="h-5 w-5" />
+                <Link href="#" className="hover:text-foreground">
                   Dashboard
                 </Link>
                 <Link
                   href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  className="text-muted-foreground hover:text-foreground"
                 >
-                  <ShoppingCart className="h-5 w-5" />
                   Orders
                 </Link>
                 <Link
                   href="#"
-                  className="flex items-center gap-4 px-2.5 text-foreground"
+                  className="text-muted-foreground hover:text-foreground"
                 >
-                  <Package className="h-5 w-5" />
                   Products
                 </Link>
                 <Link
                   href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  className="text-muted-foreground hover:text-foreground"
                 >
-                  <Users2 className="h-5 w-5" />
                   Customers
                 </Link>
                 <Link
                   href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  className="text-muted-foreground hover:text-foreground"
                 >
-                  <LineChart className="h-5 w-5" />
-                  Settings
+                  Analytics
                 </Link>
               </nav>
             </SheetContent>
           </Sheet>
-
-          <div className="relative ml-auto flex-1 md:grow-0">
-            <Link href="/dashboard/events/create">
-              <Button size="sm" className="h-10 gap-1">
-                <PlusCircle className="h-5 w-5" />
-                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  New event
-                </span>
-              </Button>
-            </Link>
+          <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+            <form className="ml-auto flex-1 sm:flex-initial">
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search products..."
+                  className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                />
+              </div>
+            </form>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full"
+                >
+                  <CircleUser className="h-5 w-5" />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -157,13 +193,6 @@ export default function Dashboard() {
                     Export
                   </span>
                 </Button>
-
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search..."
-                  className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
-                />
               </div>
             </div>
             <TabsContent value="all">
@@ -191,65 +220,86 @@ export default function Dashboard() {
                         </TableHead>
                       </TableRow>
                     </TableHeader>
-                    <TableBody>
-                      {[1, 2, 3, 4].map((event: any, i: number) => (
-                        <TableRow key={i}>
-                          <TableCell className="hidden sm:table-cell">
-                            <Image
-                              alt="Product image"
-                              className="aspect-square rounded-md object-cover"
-                              height="32"
-                              src="/next.svg"
-                              width="72"
-                            />
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            Laser Lemonade Machine
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline">Draft</Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell text-center">
-                            756
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell text-center">
-                            25
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell text-center">
-                            2023-07-12 10:42 AM
-                          </TableCell>
-                          <TableCell>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  aria-haspopup="true"
-                                  size="icon"
-                                  variant="ghost"
+                    <Suspense fallback="Loading...">
+                      <TableBody>
+                        {events?.length === 0 ? (
+                          <div>No events created yet.</div>
+                        ) : (
+                          events?.map((event: any, i: number) => (
+                            <TableRow key={i}>
+                              <TableCell className="hidden sm:table-cell">
+                                <Image
+                                  alt="Product image"
+                                  className="aspect-square rounded-md object-fit"
+                                  height="32"
+                                  src="/next.svg"
+                                  width="72"
+                                />
+                              </TableCell>
+                              <TableCell className="font-medium">
+                                <Link
+                                  href={`/dashboard/events/${event.id}/overview`}
+                                  className="hover:font-semibold hover:text-indigo-500"
                                 >
-                                  <MoreHorizontal className="h-4 w-4" />
-                                  <span className="sr-only">Toggle menu</span>
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>
-                                  <Link href={`/dashboard/events/${i}`}>
-                                    Edit
-                                  </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>Delete</DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
+                                  {event.name}
+                                </Link>
+                              </TableCell>
+
+                              <TableCell>
+                                <Badge variant="outline">
+                                  {event.status[0] +
+                                    event.status.slice(1).toLowerCase()}
+                                </Badge>
+                              </TableCell>
+                              <TableCell className="hidden md:table-cell text-center">
+                                756
+                              </TableCell>
+                              <TableCell className="hidden md:table-cell text-center">
+                                25
+                              </TableCell>
+                              <TableCell className="hidden md:table-cell text-center">
+                                {event.created_at}
+                              </TableCell>
+                              <TableCell>
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <Button
+                                      aria-haspopup="true"
+                                      size="icon"
+                                      variant="ghost"
+                                    >
+                                      <MoreHorizontal className="h-4 w-4" />
+                                      <span className="sr-only">
+                                        Toggle menu
+                                      </span>
+                                    </Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent align="end">
+                                    <DropdownMenuLabel>
+                                      Actions
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuItem>
+                                      <Link
+                                        href={`/dashboard/events/${event.id}/overview`}
+                                      >
+                                        Edit
+                                      </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        )}
+                      </TableBody>
+                    </Suspense>
                   </Table>
                 </CardContent>
                 <CardFooter>
                   <div className="text-xs text-muted-foreground">
-                    Showing <strong>1-10</strong> of <strong>32</strong>{" "}
-                    products
+                    Showing <strong>1-10</strong> of{" "}
+                    <strong>{events?.length || ""}</strong> events
                   </div>
                 </CardFooter>
               </Card>

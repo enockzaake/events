@@ -72,3 +72,15 @@ export interface TransactionResponse {
   ResponseDescription: string;
   CustomerMessage: string;
 }
+
+interface Error {
+  statusCode: string;
+  error: string;
+  message: string;
+}
+
+// Interface for the overall response structure
+export interface FileUploadResponse {
+  data: { path: string; id: string; fullPath: string } | null;
+  error: Error | null;
+}
