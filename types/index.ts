@@ -26,6 +26,7 @@ export interface EventType {
   cover_image: string;
   visibility: "PUBLIC" | "PRIVATE";
   status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
+  created_at: string;
 }
 
 export interface TicketType {

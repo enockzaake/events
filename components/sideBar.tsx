@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 
 const SideBar = () => {
   const path = usePathname();
-  console.log("SIDEBAR PATHNAME:", path);
   return (
     <div className="flex flex-col h-screen fixed p-3 w-56 space-y-6 bg-indigo-900 text-white">
       {/* LOGO */}
@@ -22,7 +21,6 @@ const SideBar = () => {
               className={`flex items-center p-2 space-x-3 rounded-md ${
                 path.endsWith("/dashboard") ? "bg-[#e2ece9] text-black" : ""
               } `}
-              // bg-[#e2ece9] text-black
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +37,9 @@ const SideBar = () => {
               rel="noopener noreferrer"
               href="/dashboard/events"
               className={`flex items-center p-2 space-x-3 rounded-md ${
-                path.endsWith("/events") ? "bg-[#e2ece9] text-black" : ""
+                path.includes("dashboard/events")
+                  ? "bg-[#e2ece9] text-black"
+                  : ""
               } `}
             >
               <svg

@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -20,13 +19,9 @@ import Image from "next/image";
 import Link from "next/link";
 export default function EventDetailsNavBar() {
   let path = usePathname();
-  console.log("PATH:", path);
   let segements = JSON.parse(JSON.stringify(path.split("/")));
-  console.log("SEGMENTS:", segements);
   let id = segements[3];
-  console.log("ID:", id);
   let pathName = segements[4];
-  console.log("PATHNAME:", pathName);
 
   return (
     <div className="flex w-full flex-col sm:gap-4">
@@ -37,6 +32,7 @@ export default function EventDetailsNavBar() {
           className="object-fit rounded-md"
           width={200}
           height={200}
+          priority
         />
         <CardHeader className="flex flex-row bg-re-900 items-center justify-between w-full justify-betwee pb-3">
           <CardTitle>

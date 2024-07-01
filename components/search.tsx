@@ -29,14 +29,13 @@ const Search = () => {
     <form onSubmit={handleSearch}>
       <div className="flex justify-center mt-12 ">
         <input
-          name="search"
-          className="min-w-[800px] items-center justify-center px-3 py-3  text-black rounded-s-lg text-xl border-none"
+          // name="search"
+          className="min-w-[600px] items-center justify-center px-3 py-3 text-black rounded-s-lg text-xl"
           defaultValue={searchParams.get("query")?.toString()}
         />
 
         <button className="bg-indigo-500 py-3 px-4 rounded-e-lg">
-          {" "}
-          <SearchIcon  />
+          <SearchIcon />
         </button>
       </div>
     </form>
