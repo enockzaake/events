@@ -8,7 +8,6 @@ import { UUID } from "crypto";
 export async function getAllReviews() {}
 
 export async function getDashboardDetails() {}
-export async function eventDetails() {}
 export async function updateEventDetails() {}
 export async function deleteEvent() {}
 export async function updateEventTicket() {}
@@ -61,36 +60,6 @@ export async function createNewEvent(form: FormData) {
   const { data, error } = await supabase.from("events").insert([]).select();
 }
 
-export async function organiserEvents() {
-  //TODO: Speciify events for each organisation
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  // if (!user) {
-  //   return { data: null, error: { message: "User not found" } };
-  // }
-
-  let org_res = await supabase
-    .from("organisations")
-    .select("id")
-    .eq("owner_id", "7501e42f-1841-42cb-ba0f-9bf172d74625");
-
-  const org_ids: any = org_res.data?.map((item) => item.id);
-
-  let { data: events, error } = await supabase
-    .from("events")
-    .select(`id,cover_image,name,status,category,created_at`)
-    .in("organisation_id", org_ids);
-
-  if (!error) {
-    return { events: events, error: null };
-  } else {
-    return { events: null, error: error };
-  }
-}
-
 export async function newEventTicket(event_id: UUID, form: FormData) {
   const supabase = createClient();
 
@@ -116,7 +85,6 @@ export async function newEventTicket(event_id: UUID, form: FormData) {
     null,
     2
   );
-  console.log("TICKET DATA:", data);
 }
 
 export async function ticketDetails(event_id: UUID) {
@@ -138,4 +106,55 @@ export async function ticketDetails(event_id: UUID) {
       error: null,
     };
   }
+}
+
+export async function organiserEvents() {
+  //TODO: Speciify events for each organisation/organisation
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { data: null, error: { message: "User not found" } };
+  }
+  let org_res = await supabase
+    .from("organisations")
+    .select("id")
+    .eq("owner_id", user?.id);
+
+  const org_ids: any = org_res.data?.map((item) => item.id);
+
+  let { data: events, error } = await supabase
+    .from("events")
+    .select(`id,cover_image,name,status,category,created_at`)
+    .in("organisation_id", org_ids);
+
+  if (!error) {
+    return { events: events, error: null };
+  } else {
+    return { events: null, error: error };
+  }
+}
+export async function organiserEventsOverview(event_id: UUID) {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("tickets")
+    .select("*")
+    .eq("event_id", event_id);
+
+  return { data: data, error: error?.message };
+}
+
+export async function eventNavBarDetails(event_id: UUID) {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("events")
+    .select(
+      "id,category,name,location,start_date_time,end_date_time,cover_image,status"
+    )
+    .eq("id", event_id)
+    .single();
+
+  return { data: data, error: error?.message };
 }

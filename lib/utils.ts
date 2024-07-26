@@ -41,3 +41,8 @@ export function formatDateTime(inputDate: string) {
     time: `${hours}:${minutes} ${period}`,
   };
 }
+
+export function formatCurrency(amount: string | number) {
+  let numberString = amount.toString();
+  return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

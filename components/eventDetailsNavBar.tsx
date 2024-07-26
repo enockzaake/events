@@ -1,12 +1,4 @@
-"use client";
 //Shared navbar for event/id/* routes
-import { usePathname } from "next/navigation";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-} from "@/components/ui/breadcrumb";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,17 +9,22 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-export default function EventDetailsNavBar() {
-  let path = usePathname();
-  let segements = JSON.parse(JSON.stringify(path.split("/")));
-  let id = segements[3];
-  let pathName = segements[4];
+import EventPageBreadCrumbs from "./eventPageBreadCrumbs";
 
+import { eventNavBarDetails } from "@/actions/organiserActions";
+import { UUID } from "crypto";
+
+export default async function EventDetailsNavBar({
+  event_id,
+}: {
+  event_id: string;
+}) {
+  const { data, error } = await eventNavBarDetails(event_id as UUID);
   return (
     <div className="flex w-full flex-col sm:gap-4">
       <Card className="flex min-h-36">
         <Image
-          src="/event_banner.jpg"
+          src={data?.cover_image}
           alt="Event cover image"
           className="object-fit rounded-md"
           width={200}
@@ -36,79 +33,24 @@ export default function EventDetailsNavBar() {
         />
         <CardHeader className="flex flex-row bg-re-900 items-center justify-between w-full justify-betwee pb-3">
           <CardTitle>
-            EVENT 2
-            <CardDescription className="max-w-lg text-balance leading-relaxed">
-              Friday 28 June 2024 from 2:30 to 7:00
+            {data?.name}
+            <CardDescription className="max-w-lg font-light text-black space-y-1">
+              <span className="">From : {data?.start_date_time}</span> <br></br>
+              <span className="">To : {data?.end_date_time}</span>
+              <br></br>
+              <span className="">Location: {data?.location}</span>
+              <br></br>
+              <span className="">Status : {data?.status}</span>
+              <br></br>
             </CardDescription>
           </CardTitle>
 
-          <Button>View Event</Button>
+          <Link href={`/event/${event_id}`} target="_blank">
+            <Button>View Event</Button>
+          </Link>
         </CardHeader>
       </Card>
-      <Breadcrumb className="hidden md:flex">
-        <BreadcrumbList className="">
-          <BreadcrumbItem>
-            <BreadcrumbLink
-              className={`${
-                pathName === "overview"
-                  ? "border-b-2 border-b-green-900 text-green-400"
-                  : ""
-              }`}
-              asChild
-            >
-              <Link href={`/dashboard/events/${id}/overview`}>Overview</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <BreadcrumbLink
-              className={`${
-                pathName === "attendees"
-                  ? "border-b-2 border-b-green-900 text-green-400"
-                  : ""
-              }`}
-              asChild
-            >
-              <Link href={`/dashboard/events/${id}/attendees`}>Attendees</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <BreadcrumbLink
-              className={`${
-                pathName === "tickets"
-                  ? "border-b-2 border-b-green-900 text-green-400"
-                  : ""
-              }`}
-              asChild
-            >
-              <Link href={`/dashboard/events/${id}/tickets`}>Tickets</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <BreadcrumbLink
-              className={`${
-                pathName === "info"
-                  ? "border-b-2 border-b-green-900 text-green-400"
-                  : ""
-              }`}
-              asChild
-            >
-              <Link href={`/dashboard/events/${id}/info`}>Event Page</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <BreadcrumbLink
-              className={`${
-                pathName === "settings"
-                  ? "border-b-2 border-b-green-900 text-green-400"
-                  : ""
-              }`}
-              asChild
-            >
-              <Link href={`/dashboard/events/${id}/settings`}>Settings</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <EventPageBreadCrumbs />
     </div>
   );
 }

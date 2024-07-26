@@ -19,7 +19,6 @@ import { Button } from "./ui/button";
 export const NewTicket = ({ event_id }: { event_id: UUID }) => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Submitting form...");
     const form = new FormData(e.target as HTMLFormElement);
     await newEventTicket(event_id, form);
   }

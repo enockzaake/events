@@ -25,12 +25,12 @@ import {
 
 import EventCard from "@/components/eventCard";
 
-import { sample_events } from "@/lib/data/sample_events";
+// import { sample_events as events } from "@/lib/constants/sample_events";
 // 1. All events
 // 2. Filters -> params & searchParams
 // 3. Categories
 const AllEvents = async () => {
-  // const events = await getEvents();
+  const events = await getEvents();
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -147,11 +147,11 @@ const AllEvents = async () => {
           <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
             <Card>
               <CardHeader className="px-7">
-                <CardTitle>46 Events found</CardTitle>
+                <CardTitle>{events?.length || 0} events found</CardTitle>
                 <CardDescription>Results from event search.</CardDescription>
               </CardHeader>
               <CardContent>
-                {sample_events.map((event: EventType, index: number) => (
+                {events?.map((event: EventType, index: number) => (
                   <EventCard key={index} event={event} />
                 ))}
               </CardContent>

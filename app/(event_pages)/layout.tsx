@@ -7,7 +7,7 @@ export default function CommonLayout({
 }>) {
   return (
     <div>
-      <Navbar />
+      <Navbar bg_color="bg-cyan-900" />
       {children}
     </div>
   );

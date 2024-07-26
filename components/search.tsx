@@ -30,7 +30,7 @@ const Search = () => {
       <div className="flex justify-center mt-12 ">
         <input
           // name="search"
-          className="min-w-[600px] items-center justify-center px-3 py-3 text-black rounded-s-lg text-xl"
+          className="w-[600px] items-center justify-center px-3 py-3 text-black rounded-s-lg text-xl"
           defaultValue={searchParams.get("query")?.toString()}
         />
 
