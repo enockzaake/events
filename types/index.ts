@@ -26,6 +26,7 @@ export interface EventType {
   cover_image: string;
   visibility: "PUBLIC" | "PRIVATE";
   status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
+  created_at: string;
 }
 
 export interface TicketType {
@@ -83,4 +84,8 @@ interface Error {
 export interface FileUploadResponse {
   data: { path: string; id: string; fullPath: string } | null;
   error: Error | null;
+}
+
+export interface EventWithTickets extends EventType {
+  tickets: TicketType[];
 }

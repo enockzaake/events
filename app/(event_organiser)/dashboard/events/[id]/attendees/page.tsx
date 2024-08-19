@@ -59,7 +59,8 @@ import EventDetailsNavBar from "@/components/eventDetailsNavBar";
 export default function Attendees({ params: { id } }: any) {
   return (
     <div className="mx-1">
-      <EventDetailsNavBar />
+      <EventDetailsNavBar event_id={id} />
+
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
         <div className="flex flex-col sm:gap-1">
           <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">

@@ -1,10 +1,10 @@
 import EventDetailsNavBar from "@/components/eventDetailsNavBar";
 import React from "react";
 
-const EventSettings = () => {
+const EventSettings = ({ params: id }: any) => {
   return (
     <div className="mx-1">
-      <EventDetailsNavBar />
+      <EventDetailsNavBar event_id={id} />
       EventSettings
     </div>
   );
